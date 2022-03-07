@@ -6,12 +6,11 @@ step() {
 	printf '\n\033[1;36m%d) %s\033[0m\n' $_step_counter "$@" >&2  # bold cyan
 }
 
-
 step 'Set up timezone'
-setup-timezone -z Europe/Paris
+setup-timezone -z America/Los_Angeles
 
 step 'Set up keymap'
-setup-keymap fr fr-azerty
+setup-keymap us us
 
 step 'Set up networking'
 cat > /etc/network/interfaces <<-EOF
