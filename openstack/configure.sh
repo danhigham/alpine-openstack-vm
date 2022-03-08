@@ -21,8 +21,6 @@ cat > /etc/network/interfaces <<-EOF
     iface eth0 inet dhcp
 EOF
 
-step 'Configure dhclient'
-sed -e 
 
 # FIXME: remove root and alpine password
 step 'Set cloud configuration'
