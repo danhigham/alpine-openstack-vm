@@ -30,6 +30,9 @@ sed -e '/disable_root:/ s/true/false/' \
     -e '/shell:/ s#/bin/ash#/bin/zsh#' \
     -i /etc/cloud/cloud.cfg
 
+step 'Echo cloud config'
+cat /etc/cloud/cloud.cfg
+
 # To have oh-my-zsh working on first boot
 cat >> /etc/cloud/cloud.cfg <<EOF
 runcmd:
@@ -48,6 +51,9 @@ echo "PubkeyAcceptedKeyTypes=+ssh-rsa" >> /etc/ssh/sshd_config
 
 step 'Remove password for users'
 usermod -p '*' root
+
+step 'Add user'
+useradd -m -s /bin/zsh -G wheel dan
 
 step 'Adjust rc.conf'
 sed -Ei \
