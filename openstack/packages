@@ -1,3 +1,5 @@
+dhclient
+coreutils
 less
 logrotate
 openssh
