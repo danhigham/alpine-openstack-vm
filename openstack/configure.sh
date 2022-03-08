@@ -24,7 +24,7 @@ EOF
 # FIXME: remove root and alpine password
 step 'Set cloud configuration'
 sed -e '/disable_root:/ s/true/false/' \
-	-e '/ssh_pwauth:/ s/0/no/' \
+	# -e '/ssh_pwauth:/ s/0/no/' \
     -e '/name: alpine/a \     passwd: "*"' \
     -e '/lock_passwd:/ s/True/False/' \
     -e '/shell:/ s#/bin/ash#/bin/zsh#' \
@@ -47,13 +47,14 @@ sed -e '/PermitRootLogin yes/d' \
 
 # Terraform and github actions need ssh-rsa as accepted algorithm
 # The ssh client needs to be updated (see https://www.openssh.com/txt/release-8.8)
+
 echo "PubkeyAcceptedKeyTypes=+ssh-rsa" >> /etc/ssh/sshd_config
 
-step 'Remove password for users'
-usermod -p '*' root
+# step 'Remove password for users'
+# usermod -p '*' root
 
-step 'Add user'
-useradd -m -s /bin/zsh -G wheel dan
+# step 'Add user'
+# useradd -m -s /bin/zsh -G wheel dan
 
 step 'Adjust rc.conf'
 sed -Ei \
