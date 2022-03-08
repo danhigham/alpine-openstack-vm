@@ -29,18 +29,12 @@ send host-name = gethostname();
 
 # prepend domain-name-servers 127.0.0.1;
 request subnet-mask, broadcast-address, time-offset, routers,
-		domain-name, domain-name-servers, host-name, 
-		rfc3442-classless-static-routes;
-require subnet-mask, domain-name-servers;
-timeout 60;
-retry 60;
-reboot 10;
-select-timeout 7;
-script "/etc/dhclient-script";
-
-lease {
-interface "eth0";
-}
+	domain-name, domain-name-servers, domain-search, host-name,
+	dhcp6.name-servers, dhcp6.domain-search, dhcp6.fqdn, dhcp6.sntp-servers,
+	netbios-name-servers, netbios-scope, interface-mtu,
+	rfc3442-classless-static-routes, ntp-servers;
+# require subnet-mask, domain-name-servers;
+timeout 300;
 EOF
 
 cat > /etc/dhcp/dhclient-exit-hooks.d/rfc3442-classless-routes <<-EOF
@@ -127,11 +121,11 @@ chmod +x /etc/dhcp/dhclient-exit-hooks.d/rfc3442-classless-routes
 # FIXME: remove root and alpine password
 step 'Set cloud configuration'
 sed -e '/disable_root:/ s/true/false/' \
-	# -e '/ssh_pwauth:/ s/0/no/' \
     -e '/name: alpine/a \     passwd: "*"' \
     -e '/lock_passwd:/ s/True/False/' \
     -e '/shell:/ s#/bin/ash#/bin/zsh#' \
     -i /etc/cloud/cloud.cfg
+# 	-e '/ssh_pwauth:/ s/0/no/' \
 
 step 'Echo cloud config'
 cat /etc/cloud/cloud.cfg
