@@ -37,8 +37,6 @@ request subnet-mask, broadcast-address, time-offset, routers,
 timeout 300;
 EOF
 
-cat > 
-
 cat > /etc/dhcp/dhclient-exit-hooks.d/rfc3442-classless-routes <<-EOF
 #!/bin/sh
 # set classless routes based on the format specified in RFC3442
