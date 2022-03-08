@@ -23,12 +23,12 @@ EOF
 
 # FIXME: remove root and alpine password
 step 'Set cloud configuration'
-sed -e '/disable_root:/ s/true/false/' \
-	-e '/ssh_pwauth:/ s/0/no/' \
-    -e '/name: alpine/a \     passwd: "*"' \
-    -e '/lock_passwd:/ s/True/False/' \
-    -e '/shell:/ s#/bin/ash#/bin/zsh#' \
-    -i /etc/cloud/cloud.cfg
+# sed -e '/disable_root:/ s/true/false/' \
+# 	-e '/ssh_pwauth:/ s/0/no/' \
+#     -e '/name: alpine/a \     passwd: "*"' \
+#     -e '/lock_passwd:/ s/True/False/' \
+#     -e '/shell:/ s#/bin/ash#/bin/zsh#' \
+#     -i /etc/cloud/cloud.cfg
 
 # To have oh-my-zsh working on first boot
 cat >> /etc/cloud/cloud.cfg <<EOF
@@ -37,17 +37,17 @@ runcmd:
 EOF
 
 step 'Allow only key based ssh login'
-sed -e '/PermitRootLogin yes/d' \
-    -e 's/^#PasswordAuthentication yes/PasswordAuthentication no/' \
-    -e 's/^#PubkeyAuthentication yes/PubkeyAuthentication yes/' \
-    -i /etc/ssh/sshd_config
+# sed -e '/PermitRootLogin yes/d' \
+#     -e 's/^#PasswordAuthentication yes/PasswordAuthentication no/' \
+#     -e 's/^#PubkeyAuthentication yes/PubkeyAuthentication yes/' \
+#     -i /etc/ssh/sshd_config
 
 # Terraform and github actions need ssh-rsa as accepted algorithm
 # The ssh client needs to be updated (see https://www.openssh.com/txt/release-8.8)
 echo "PubkeyAcceptedKeyTypes=+ssh-rsa" >> /etc/ssh/sshd_config
 
 step 'Remove password for users'
-usermod -p '*' root
+# usermod -p '*' root
 
 step 'Adjust rc.conf'
 sed -Ei \
