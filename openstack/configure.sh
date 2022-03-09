@@ -52,11 +52,11 @@ sed -e '/PermitRootLogin yes/d' \
 
 echo "PubkeyAcceptedKeyTypes=+ssh-rsa" >> /etc/ssh/sshd_config
 
-# step 'Remove password for users'
-# usermod -p '*' root
+step 'Remove password for users'
+usermod -p '*' root
 
-# step 'Add user'
-# useradd -m -s /bin/zsh -G wheel dan
+step 'Add user'
+useradd -m -s /bin/zsh -G wheel dan
 
 step 'Adjust rc.conf'
 sed -Ei \
