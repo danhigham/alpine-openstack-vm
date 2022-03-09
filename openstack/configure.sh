@@ -19,7 +19,7 @@ cat > /etc/network/interfaces <<-EOF
 
     auto eth0
     iface eth0 inet dhcp
-      pre-up /sbin/udhcpc -R -b -O 121 -p /var/run/udhcpc.eth0.pid -i eth0
+        udhcpc_opts -i eth0 -p /var/run/udhcpc.eth0.pid -R -b -O 121
 EOF
 
 
