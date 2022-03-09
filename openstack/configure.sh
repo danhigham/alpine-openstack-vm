@@ -19,6 +19,7 @@ cat > /etc/network/interfaces <<-EOF
 
     auto eth0
     iface eth0 inet dhcp
+      pre-up /sbin/udhcpc -R -b -O 121 -p /var/run/udhcpc.eth0.pid -i eth0
 EOF
 
 
@@ -26,10 +27,10 @@ EOF
 step 'Set cloud configuration'
 sed -e '/disable_root:/ s/true/false/' \
     -e '/name: alpine/a \     passwd: "*"' \
+ 	-e '/ssh_pwauth:/ s/0/no/' \
     -e '/lock_passwd:/ s/True/False/' \
     -e '/shell:/ s#/bin/ash#/bin/zsh#' \
     -i /etc/cloud/cloud.cfg
-# 	-e '/ssh_pwauth:/ s/0/no/' \
 
 step 'Echo cloud config'
 cat /etc/cloud/cloud.cfg
